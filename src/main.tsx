@@ -9,6 +9,8 @@ import "./index.css";
 import Auth_Layout from "./Layout/Auth_Layout";
 import Error from "./Error/Error";
 import Starting from "./Authentication/Auth_component/Starting";
+import Email from "./Authentication/Auth_component/Email";
+import Verification from "./Authentication/Auth_component/Verification";
 
 // Define the routes with TypeScript
 const router: RouteObject[] = [
@@ -20,6 +22,14 @@ const router: RouteObject[] = [
       {
         path: "/",
         element: <Starting />,
+      },
+      {
+        path: "/emailsignup",
+        element: <Email />,
+      },
+      {
+        path: "/varify",
+        element: <Verification />,
       },
     ],
   },

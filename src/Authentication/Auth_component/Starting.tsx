@@ -5,12 +5,13 @@ import { BsApple } from "react-icons/bs";
 import { MdEmail } from "react-icons/md";
 import { FiPhone } from "react-icons/fi";
 import logo from "/logo2.png"; // Ensure this path is correct
+import { Link } from "react-router-dom";
 
 const Starting: React.FC = () => {
   return (
-    <div className="grid grid-cols-2 min-h-screen">
+    <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen">
       {/* Left Section with Gradient */}
-      <div className="flex flex-col w-full items-center justify-between text-center py-10 shadow-md ">
+      <div className="hidden md:flex flex-col w-full items-center justify-between text-center py-10 shadow-md ">
         <div className="w-full h-[50%] flex flex-col justify-end items-center">
           <img src={logo} alt="Logo" className="w-[300px] h-[130px]" />
           <p className="text-lg roboto font-semibold text-gray-700">
@@ -27,16 +28,19 @@ const Starting: React.FC = () => {
       </div>
 
       {/* Right Section with Same Gradient */}
-      <div className="flex flex-col justify-center items-center p-10 shadow-md bg-gradient-to-br from-blue-300 via-blue-200 to-blue-50">
+      <div className="flex flex-col justify-center items-center p-6 md:p-10 shadow-md bg-gradient-to-br from-blue-300 via-blue-200 to-blue-50">
         <h1 className="text-3xl roboto text-center font-bold text-black mb-6">
           Begin your journey <br /> to better health
         </h1>
 
         <div className="flex flex-col md:w-[80%] gap-4">
-          <button className="flex items-center justify-center gap-2 bgprime text-white py-3 px-4 rounded-md font-medium hover:bg-blue-700 transition">
+          <Link
+            to={"/emailsignup"}
+            className="flex items-center justify-center gap-2 bgprime text-white py-3 px-4 rounded-md font-medium hover:bg-blue-700 transition"
+          >
             <MdEmail className="text-lg" />
             Sign up with Email
-          </button>
+          </Link>
           <button className="flex items-center justify-center gap-2 bg-white text-gray-800 py-3 px-4 rounded-md font-medium hover:bg-gray-200 transition">
             <FcGoogle className="text-lg" />
             Sign in with Google
