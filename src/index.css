@@ -1,2 +1,12 @@
 @import "tailwindcss";
 @plugin "daisyui";
+.roboto{
+  font-family: "Roboto", sans-serif;
+
+}
+.lightbg{
+  background-color: white;
+}
+.bgprime{
+  background-color: #1e40af;
+}

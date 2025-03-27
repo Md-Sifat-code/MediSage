@@ -6,12 +6,22 @@ import {
   RouteObject,
 } from "react-router-dom";
 import "./index.css";
+import Auth_Layout from "./Layout/Auth_Layout";
+import Error from "./Error/Error";
+import Starting from "./Authentication/Auth_component/Starting";
 
 // Define the routes with TypeScript
 const router: RouteObject[] = [
   {
     path: "/",
-    element: <div>Hello world!</div>,
+    element: <Auth_Layout />,
+    errorElement: <Error />,
+    children: [
+      {
+        path: "/",
+        element: <Starting />,
+      },
+    ],
   },
 ];
 
