@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   MdOutlineStar,
   MdSearch,
@@ -22,11 +22,42 @@ import {
 import doctorImg from "/doctor.png"; // Sample doctor image
 
 const Dashboard: React.FC = () => {
+  const [messages, setMessages] = useState<
+    { text: string; sender: "user" | "ai" }[]
+  >([]);
+  const [inputText, setInputText] = useState("");
+  const [loading, setLoading] = useState(false); // Keep loading if you want a "Typing..." effect
+
+  const sendMessage = async () => {
+    if (!inputText.trim()) return;
+
+    // Add user message
+    const userMessage = { text: inputText, sender: "user" as const };
+    setMessages((prev) => [...prev, userMessage]);
+    setInputText("");
+    setLoading(true);
+
+    try {
+      // Fetch AI response
+      const response = await fetch(
+        `https://unisage.onrender.com/ai/ask/${encodeURIComponent(inputText)}`
+      );
+      const aiText = await response.text();
+
+      // Add AI message
+      const aiMessage = { text: aiText, sender: "ai" as const };
+      setMessages((prev) => [...prev, aiMessage]);
+    } catch (error) {
+      console.error("Error fetching AI response:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="flex flex-col gap-4 min-h-screen p-6 bg-gray-50">
+    <div className="flex plus flex-col gap-4 min-h-screen p-6 bg-gray-50">
       {/* FIRST SECTION - GREETING & ACTIONS */}
       <div className="flex flex-row justify-between items-center bg-white shadow-md rounded-lg p-4">
-        {/* Left - Greeting */}
         <div className="flex items-center gap-2">
           <h1 className="text-2xl font-bold text-gray-800">
             Good Morning, Sajid
@@ -34,7 +65,6 @@ const Dashboard: React.FC = () => {
           <MdOutlineStar className="text-yellow-500 text-2xl" />
         </div>
 
-        {/* Right - Actions */}
         <div className="flex items-center gap-4">
           <div className="relative">
             <input
@@ -48,109 +78,112 @@ const Dashboard: React.FC = () => {
           <MdFavoriteBorder className="text-2xl text-gray-600 cursor-pointer hover:text-gray-800" />
           <MdSettings className="text-2xl text-gray-600 cursor-pointer hover:text-gray-800" />
           <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 transition">
-            <MdOutlineSmartToy className="text-xl" />
             Consult AI Assistant
+            <MdOutlineSmartToy className="text-xl" />
           </button>
         </div>
       </div>
 
       {/* SECOND SECTION - APPOINTMENT DETAILS */}
-      <div className="flex flex-row justify-between items-center bg-white shadow-md rounded-lg p-4">
-        {/* Doctor Info */}
+      <div className="flex flex-row justify-between items-center bgdash shadow-md rounded-lg p-4">
         <div className="flex items-center gap-4">
           <img
             src={doctorImg}
             alt="Doctor"
-            className="w-16 h-16 rounded-full shadow"
+            className="w-[50px] h-[50px] rounded-full shadow"
           />
           <div>
-            <h2 className="text-lg font-semibold text-gray-800">
+            <h2 className="text-lg font-semibold text-white">
               Dr. James Carter
             </h2>
-            <p className="text-sm text-gray-500">Cardiologist</p>
+            <p className="text-sm text-white">Cardiologist</p>
           </div>
         </div>
 
-        {/* Appointment Details */}
-        <div className="flex items-center gap-6 text-gray-700">
+        <div className="flex items-center p-2 bg-[#183188] rounded-xl gap-6 text-white">
           <div className="flex items-center gap-2">
-            <MdEvent className="text-xl" />
+            <MdEvent className="text-4xl rounded-lg px-2 py-1 bg-blue-700" />
             <span>Thu, 12 April, 2025</span>
           </div>
           <div className="flex items-center gap-2">
-            <MdAccessTime className="text-xl" />
+            <MdAccessTime className="text-4xl rounded-lg px-2 py-1 bg-blue-700" />
             <span>Time: 11:00 AM</span>
           </div>
           <div className="flex items-center gap-2">
-            <MdRoom className="text-xl" />
+            <MdRoom className="text-4xl rounded-lg px-2 py-1 bg-blue-700" />
             <span>Cabin No: 512</span>
           </div>
           <div className="flex items-center gap-2">
-            <MdLocationOn className="text-xl" />
+            <MdLocationOn className="text-4xl rounded-lg px-2 py-1 bg-blue-700" />
             <span>United Hospital, Dhaka</span>
           </div>
         </div>
 
-        {/* Chat Icon */}
-        <MdChatBubbleOutline className="text-2xl text-blue-600 cursor-pointer hover:text-blue-800" />
+        <MdChatBubbleOutline className="text-5xl text-black p-3 rounded-full bg-white cursor-pointer hover:text-blue-800" />
       </div>
 
       {/* THIRD SECTION - FEATURED CARDS */}
       <div className="grid grid-cols-4 gap-4">
-        {/* Card 1 */}
-        <div className="flex flex-col items-center bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition cursor-pointer">
-          <MdMenuBook className="text-3xl text-blue-600" />
+        <div className="flex flex-col items-start bg-[#F9F5FF] shadow-md rounded-lg p-6 hover:shadow-lg transition cursor-pointer">
+          <MdMenuBook className="text-4xl text-blue-600" />
           <p className="text-lg font-semibold mt-2">Book an Appointment</p>
           <p className="text-gray-500 text-sm">Find a Doctor</p>
         </div>
-
-        {/* Card 2 */}
-        <div className="flex flex-col items-center bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition cursor-pointer">
-          <MdQrCode className="text-3xl text-blue-600" />
+        <div className="flex flex-col items-start bg-[#EDFCF2] shadow-md rounded-lg p-6 hover:shadow-lg transition cursor-pointer">
+          <MdQrCode className="text-4xl text-green-600" />
           <p className="text-lg font-semibold mt-2">Appointment with QR</p>
           <p className="text-gray-500 text-sm">Queuing without the hassle</p>
         </div>
-
-        {/* Card 3 */}
-        <div className="flex flex-col items-center bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition cursor-pointer">
-          <MdMessage className="text-3xl text-blue-600" />
+        <div className="flex flex-col items-start bg-[#FEF6EE] shadow-md rounded-lg p-6 hover:shadow-lg transition cursor-pointer">
+          <MdMessage className="text-4xl text-[#F8B294]" />
           <p className="text-lg font-semibold mt-2">Request Consultation</p>
           <p className="text-gray-500 text-sm">Talk to a Specialist</p>
         </div>
-
-        {/* Card 4 */}
-        <div className="flex flex-col items-center bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition cursor-pointer">
-          <MdLocalHospital className="text-3xl text-blue-600" />
+        <div className="flex flex-col items-start bg-[#FEF3F2] shadow-md rounded-lg p-6 hover:shadow-lg transition cursor-pointer">
+          <MdLocalHospital className="text-4xl text-red-300" />
           <p className="text-lg font-semibold mt-2">Emergency Ambulance</p>
           <p className="text-gray-500 text-sm">Call Nearby Ambulance</p>
         </div>
       </div>
 
       {/* FOURTH SECTION - AI CHAT SYSTEM */}
-      <div className="bg-white shadow-md rounded-lg p-6 min-h-[60vh] flex flex-col">
+      <div className="bg-gray-100 p-6 min-h-[60vh] shadow-md rounded-lg flex flex-col">
         {/* Header */}
         <div className="flex items-center gap-2">
           <MdOutlineStar className="text-blue-600 text-2xl" />
           <h1 className="text-2xl font-bold text-gray-800">
             Wellness Assistant
           </h1>
-          <span className="px-3 py-1 bg-blue-200 text-blue-600 rounded">
+          <span className="px-3 py-1 font-bold bg-blue-200 text-blue-600 rounded">
             AI
           </span>
         </div>
 
-        {/* Messages Container */}
+        {/* Messages */}
         <div className="flex flex-col flex-grow mt-4 space-y-2 overflow-y-auto">
-          <div className="chat chat-start">
-            <div className="chat-bubble bg-gray-200 text-black">
-              Hello! How can I assist you today?
+          {messages.map((msg, index) => (
+            <div
+              key={index}
+              className={`chat ${
+                msg.sender === "user" ? "chat-end" : "chat-start"
+              }`}
+            >
+              <div
+                className={`chat-bubble ${
+                  msg.sender === "user"
+                    ? "bg-blue-600 text-white"
+                    : "bg-white text-black"
+                }`}
+              >
+                {msg.text}
+              </div>
             </div>
-          </div>
-          <div className="chat chat-end">
-            <div className="chat-bubble bg-blue-600 text-white">
-              Can you help me book an appointment?
+          ))}
+          {loading && (
+            <div className="chat chat-start">
+              <div className="chat-bubble bg-white text-black">Typing...</div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Input Section */}
@@ -158,11 +191,16 @@ const Dashboard: React.FC = () => {
           <MdMic className="text-2xl text-gray-600 cursor-pointer" />
           <input
             type="text"
-            placeholder="Type a message..."
             className="input input-bordered flex-grow"
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && sendMessage()}
           />
           <MdAttachFile className="text-2xl text-gray-600 cursor-pointer" />
-          <MdSend className="text-2xl text-blue-600 cursor-pointer" />
+          <MdSend
+            className="text-4xl text-blue-600 cursor-pointer"
+            onClick={sendMessage}
+          />
         </div>
       </div>
     </div>
