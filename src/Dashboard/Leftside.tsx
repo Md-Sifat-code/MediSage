@@ -15,7 +15,7 @@ const Leftside: React.FC = () => {
   const [active, setActive] = useState("Dashboard");
 
   return (
-    <div className="flex flex-col h-screen w-full bg-white text-black p-4">
+    <div className="hidden md:flex flex-col h-screen w-full bg-white text-black p-4">
       {/* Logo Section */}
       <div className="flex flex-row justify-center gap-2 items-center">
         <img src={logo} alt="Logo" className="w-[50px] h-[50px]" />

@@ -55,9 +55,9 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="flex plus flex-col gap-4 min-h-screen p-6 bg-gray-50">
+    <div className="flex plus flex-col gap-4 min-h-screen md:p-6 bg-gray-50">
       {/* FIRST SECTION - GREETING & ACTIONS */}
-      <div className="flex flex-row justify-between items-center bg-white shadow-md rounded-lg p-4">
+      <div className="flex flex-col md:flex-row w-full justify-between items-center bg-white shadow-md rounded-lg p-2 md:p-4">
         <div className="flex items-center gap-2">
           <h1 className="text-2xl font-bold text-gray-800">
             Good Morning, Sajid
@@ -65,7 +65,7 @@ const Dashboard: React.FC = () => {
           <MdOutlineStar className="text-yellow-500 text-2xl" />
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col p-2 md:p-0 md:flex-row items-center gap-4">
           <div className="relative">
             <input
               type="text"
@@ -85,7 +85,7 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* SECOND SECTION - APPOINTMENT DETAILS */}
-      <div className="flex flex-row justify-between items-center bgdash shadow-md rounded-lg p-4">
+      <div className="flex flex-col md:flex-row justify-between items-center bgdash shadow-md rounded-lg p-4">
         <div className="flex items-center gap-4">
           <img
             src={doctorImg}
@@ -100,7 +100,7 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex items-center p-2 bg-[#183188] rounded-xl gap-6 text-white">
+        <div className="flex flex-col md:flex-row items-start mt-4 md:mt-0 md:items-center p-2 bg-[#183188] rounded-xl gap-6 text-white">
           <div className="flex items-center gap-2">
             <MdEvent className="text-4xl rounded-lg px-2 py-1 bg-blue-700" />
             <span>Thu, 12 April, 2025</span>
@@ -119,11 +119,11 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        <MdChatBubbleOutline className="text-5xl text-black p-3 rounded-full bg-white cursor-pointer hover:text-blue-800" />
+        <MdChatBubbleOutline className="text-5xl mt-4 md:mt-0 text-black p-3 rounded-full bg-white cursor-pointer hover:text-blue-800" />
       </div>
 
       {/* THIRD SECTION - FEATURED CARDS */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="flex flex-col items-start bg-[#F9F5FF] shadow-md rounded-lg p-6 hover:shadow-lg transition cursor-pointer">
           <MdMenuBook className="text-4xl text-blue-600" />
           <p className="text-lg font-semibold mt-2">Book an Appointment</p>
@@ -160,7 +160,7 @@ const Dashboard: React.FC = () => {
         </div>
 
         {/* Messages */}
-        <div className="flex flex-col flex-grow mt-4 space-y-2 overflow-y-auto">
+        <div className="flex flex-col flex-grow mt-4 space-y-2 overflow-y-auto max-h-[40vh]">
           {messages.map((msg, index) => (
             <div
               key={index}
@@ -187,7 +187,7 @@ const Dashboard: React.FC = () => {
         </div>
 
         {/* Input Section */}
-        <div className="flex items-center gap-2 mt-4">
+        <div className="flex items-center gap-2 mt-12">
           <MdMic className="text-2xl text-gray-600 cursor-pointer" />
           <input
             type="text"
@@ -208,3 +208,4 @@ const Dashboard: React.FC = () => {
 };
 
 export default Dashboard;
+//okay
