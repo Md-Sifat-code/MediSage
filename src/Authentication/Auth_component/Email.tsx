@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import logo from "/Fatured icon.png"; // Ensure this path is correct
@@ -10,6 +10,9 @@ const BASE_URL =
   import.meta.env.VITE_BASE_URL || "https://unisage.onrender.com";
 
 const Email: React.FC = () => {
+  useEffect(() => {
+    document.title = "MediSage || Email Sign up"; // Set the title
+  }, []);
   const navigate = useNavigate(); // Initialize the navigate function
 
   const [formData, setFormData] = useState({

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   MdOutlineStar,
   MdSearch,
@@ -22,6 +22,9 @@ import {
 import doctorImg from "/doctor.png"; // Sample doctor image
 
 const Dashboard: React.FC = () => {
+  useEffect(() => {
+    document.title = "MediSage || Dashboard"; // Set the title
+  }, []);
   const [messages, setMessages] = useState<
     { text: string; sender: "user" | "ai" }[]
   >([]);
